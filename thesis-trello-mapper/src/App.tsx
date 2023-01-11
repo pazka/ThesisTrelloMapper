@@ -1,22 +1,18 @@
-import React, { useEffect, useRef } from 'react';
-import logo from './logo.svg';
+import { useEffect } from 'react';
 import './App.css';
-import { initMap } from './utils/map';
+import MapDipslay from './components/MapDisplay';
 
 function App() {
-  const ref = useRef(null)
   useEffect(() => {
-    if(ref.current)
-      initMap(ref)
-  }, [ref])
+    //init api services ans script
+
+  }, []);
 
   return (
-    <div className="App">
-      Hey ho
-      <div ref={ref} style={{
-        width: "100%",
-        height : "80vh"
-      }}></div>
+    <div style={{
+      height: "100vh"
+    }}>
+      <MapDipslay />
     </div>
   );
 }

@@ -1,4 +1,5 @@
-export interface TrellCard {
+
+export interface TrelloCard {
     id: string // ex. 633beddfebbdd60030b35c5a
     address: null,
     badges: {
@@ -105,6 +106,7 @@ export interface TrellCard {
     pluginData: [],
     customFieldItems: []
 }
+
 export interface TrelloAttachements {
     "bytes": number, // ex. 18880,
     "date": string, // ex. 2022-12-30T11:30:54.519Z",
@@ -143,10 +145,4 @@ export interface TrelloList {
         }
     },
     "creationMethod": null
-
-}
-
-export function getGoogleMarkersFromTrelloData(): google.maps.Marker[] {
-    //get
-    return []
 }
