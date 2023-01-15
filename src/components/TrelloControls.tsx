@@ -1,19 +1,34 @@
 import {useEffect, useRef, useState} from "react"
 import {initMap} from "../services/maps/mapService";
-import {fetchTrelloExport} from "../services/trello/trelloService";
+import {
+    fetchTrelloCards,
+    fetchTrelloLists,
+    getTrelloCardsWithList,
+    TrelloCardWithList
+} from "../services/trello/trelloService";
 import {TrelloCard} from "../../types/TrelloCard";
 
 export default function TrelloControls() {
-    const [trelloExport, setTrelloExport] = useState<any>();
-
+    const [trelloCards, setTrelloCards] = useState<TrelloCard[]>();
+    const [trelloLists, setTrelloLists] = useState<TrelloList[]>();
+    const [trelloCardWithList, setTrelloCardWithList] = useState<TrelloCardWithList[]>();
+    
     useEffect(() => {
-        fetchTrelloExport().then((data: TrelloCard[]) => {
-            setTrelloExport(data);
-        });
+        getTrelloCardsWithList().then(setTrelloCardWithList);
     },[])
 
     //return a absolute position floating div 
-    return <pre style={{
+    return <div>
+        <pre style={{
+            position: "absolute",
+            top: "0",
+            left: "0",
+            width: "300px",
+            height: "100%",
+            backgroundColor: "white",
+            overflow: "scroll"
+        }}>{JSON.stringify(trelloCardWithList, null, 4)}</pre>
+        <pre style={{
         position: "absolute",
         top: "0",
         right: "0",
@@ -21,5 +36,6 @@ export default function TrelloControls() {
         height: "100%",
         backgroundColor: "white",
         overflow: "scroll"
-    }}>{JSON.stringify(trelloExport, null, 4)}</pre>
+    }}>{JSON.stringify(trelloCards, null, 4)}</pre>
+    </div>
 }
