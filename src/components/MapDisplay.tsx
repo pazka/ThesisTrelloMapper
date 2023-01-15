@@ -2,14 +2,17 @@ import {useEffect, useRef, useState} from "react"
 import {initMap} from "../services/maps/mapService";
 
 export default function MapDisplay() {
-    const ref = useRef(null)
-    const [mapInstance, setMapInstance] = useState<google.maps.Map | null>(null)
-    
+    const ref = useRef<HTMLDivElement>(null)
+    const [map, setMap] = useState<google.maps.Map>();
+
     useEffect(() => {
-        if (ref.current) {
-            setMapInstance(initMap(ref))
+        if (ref.current && !map) {
+            const map = initMap(ref.current);
+            if (map) {
+                setMap(map);
+            }
         }
-    }, [ref])
+    }, [ref, map])
 
     return <div ref={ref} id={"mainMap"} style={{
         width: "100%",

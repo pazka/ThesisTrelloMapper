@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import './App.css';
-import MapDipslay from './components/MapDisplay';
+import MapDisplay from './components/MapDisplay';
 
 function App() {
   useEffect(() => {
@@ -12,7 +12,7 @@ function App() {
     <div style={{
       height: "100vh"
     }}>
-      <MapDipslay />
+      <MapDisplay />
     </div>
   );
 }
