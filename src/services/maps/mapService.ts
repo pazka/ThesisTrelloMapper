@@ -9,9 +9,11 @@ export function initMap(mapRef: HTMLElement): google.maps.Map {
         mapRef,
         {
             zoom: 4,
-            styles: mapStyle as google.maps.MapTypeStyle[]
+            styles: mapStyle as google.maps.MapTypeStyle[],
+            center: {lat: -25.363, lng: 131.044},
+            mapTypeId: google.maps.MapTypeId.ROADMAP
         }
-    );
+    ); 
 
     createMarker(map)
     return map
