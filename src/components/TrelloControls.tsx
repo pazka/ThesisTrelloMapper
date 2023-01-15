@@ -24,6 +24,7 @@ export default function TrelloControls() {
         overflow: "auto",
     }}>
         <h1>Alessia Sanna - Journal de Bord</h1>
+        {!trelloCardsCompiled && <p>Loading...</p>}
         <div>
             {listNamesSortedByDate.map((listName) => <TrelloListMenu
                 key={listName}

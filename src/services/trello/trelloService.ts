@@ -14,23 +14,24 @@ export async function mockFetchTrelloCards(): Promise<any[]> {
 
 //from doc https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-get
 export async function fetchTrelloCards(): Promise<TrelloCard[]> {
-    if (process.env.NODE_ENV === 'development') {
-        //return mockFetchTrelloCards()
-    }
-
     //make fetch api call to trello
     const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/cards?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
     return await data.json()
 }
 
 export async function fetchTrelloLists(): Promise<TrelloList[]> {
-    if (process.env.NODE_ENV === 'development') {
-        //return mockFetchTrelloCards()
-    }
-
     //make fetch api call to trello for getting the lists of the boars
     const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/lists?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
     return await data.json()
+}
+
+
+export async function fetchTrelloBoard(): Promise<TrelloBoardCompiled> {
+    //make fetch api call to trello for getting the lists of the boars
+    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
+    const jsonData: TrelloBoard = await data.json()
+
+    return injectLabelsInformationsInBoard(jsonData)
 }
 
 export interface TrelloCardCompiled extends TrelloCard {
@@ -41,7 +42,7 @@ export interface TrelloCardCompiled extends TrelloCard {
     }
 }
 
-function injectListInformations(cards: TrelloCard[], lists: TrelloList[]): TrelloCardCompiled[] {
+function injectListInformationsInCard(cards: TrelloCard[], lists: TrelloList[]): TrelloCardCompiled[] {
     return cards.map(card => {
         const list = lists.find(list => list.id === card.idList)
         return {
@@ -55,7 +56,24 @@ function injectListInformations(cards: TrelloCard[], lists: TrelloList[]): Trell
     })
 }
 
-export function getDateOfCardFromListTitle(listName?: string): Date  {
+export function injectLabelsInformationsInBoard(board: TrelloBoard): TrelloBoardCompiled {
+    const labels = board.labelNames
+    const keptLabels = Object.keys(labels).reduce((acc: TrelloLabels, key) => {
+        if (labels[key] !== "") {
+            acc[key] = labels[key]
+        }
+        return acc
+    }, {})
+
+    return {
+        ...board,
+        _compiled: {
+            realLabels: keptLabels
+        }
+    }
+}
+
+export function getDateOfCardFromListTitle(listName?: string): Date {
     if (!listName)
         return new Date()
 
@@ -76,14 +94,15 @@ export function getDateOfCardFromListTitle(listName?: string): Date  {
 export async function getTrelloCardsWithList(): Promise<TrelloCardCompiled[]> {
     const cards = await fetchTrelloCards()
     const lists = await fetchTrelloLists()
+    const labels = await fetchTrelloBoard()
 
-    return injectListInformations(cards, lists)
+    return injectListInformationsInCard(cards, lists)
 }
 
 export async function getGoogleMarkersFromTrelloData(): Promise<google.maps.Marker[]> {
     const cards = await fetchTrelloCards()
     const lists = await fetchTrelloLists()
-    const cardsWithList = injectListInformations(cards, lists)
+    const cardsWithList = injectListInformationsInCard(cards, lists)
 
     return []
 }

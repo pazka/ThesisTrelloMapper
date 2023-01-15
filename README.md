@@ -9,9 +9,9 @@ Website that allow for a display of an specific trello agile kanban, to be displ
 - [X] Use Custom Map Style
 - [X] Use Custom Markers 
 - [ ] Use Custom Markers Imported from trello
-  - Redact rules of conversion with the artist 
-  - map rules to google Map
-- [ ] Have a menu that displays those markers (menu must include a filter tool on the lists)
+  - [X] Redact rules of conversion with the artist 
+  - [ ] -- map rules to google Map
+- [ ] -- Have a menu that displays those markers (menu must include a filter tool on the lists)
 - [ ] Generate a legend for the map from trello labels data (with color)
 - [ ] Optional : create itinerary from tasks from the same list
 - [X] Tool to import the latest trello (will use Trello Atlassian API)
