@@ -1,7 +1,7 @@
 import example from './example.json';
 import {TrelloCard} from "../../../types/TrelloCard";
 
-export const TRELLO_API_KEY = "YGZH0dNdld7cMw66ZgSt0125"
+export const TRELLO_API_KEY = "7ef26c60b9727dde14ff6ecbe7c2a02a"
 
 export async function mockFetchTrelloExport(): Promise<TrelloCard[]> {
     //@ts-ignore
@@ -14,7 +14,7 @@ export async function fetchTrelloExport(): Promise<TrelloCard[]> {
     }
 
     //@ts-ignore
-    const trelloExport = await Trello.get(`https://api.trello.com/1/boards/6241fcc7a56cbd7b5fee8b14/cards?key=${TRELLO_API_KEY}`)
+    const trelloExport = await Trello.get(`https://api.trello.com/1/boards/D6MEwgAM/cards?key=${TRELLO_API_KEY}`)
     const trelloExportJson = await trelloExport.json()
     return trelloExportJson
 }
