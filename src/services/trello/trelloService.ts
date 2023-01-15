@@ -37,7 +37,7 @@ export interface TrelloCardCompiled extends TrelloCard {
     _compiled: {
         listName: string
         listData?: TrelloList
-        dateFromListName?: Date | null
+        dateInListName?: Date | null
     }
 }
 
@@ -49,20 +49,20 @@ function injectListInformations(cards: TrelloCard[], lists: TrelloList[]): Trell
             _compiled: {
                 listName: list?.name ?? "Unclassified",
                 listData: list,
-                dateFromListName: getDateOfCardFromListTitle(list?.name)
+                dateInListName: getDateOfCardFromListTitle(list?.name)
             }
         }
     })
 }
 
-function getDateOfCardFromListTitle(listName?: string): Date | null {
+export function getDateOfCardFromListTitle(listName?: string): Date  {
     if (!listName)
-        return null
+        return new Date()
 
     //Date format is : DD/MM/YY
     const date = listName.match(/FAIT (\d{2})\/(\d{2})\/(\d{2})/)
     if (!date) {
-        return null
+        return new Date()
     }
 
     return new Date(
@@ -86,4 +86,16 @@ export async function getGoogleMarkersFromTrelloData(): Promise<google.maps.Mark
     const cardsWithList = injectListInformations(cards, lists)
 
     return []
+}
+
+
+export function groupTrelloCardsByListName(cards: TrelloCardCompiled[]): { [key: string]: TrelloCardCompiled[] } {
+    return cards?.reduce((acc, card: TrelloCardCompiled) => {
+
+        if (!acc[card._compiled.listName]) {
+            acc[card._compiled.listName] = [];
+        }
+        acc[card._compiled.listName].push(card);
+        return acc;
+    }, {} as { [key: string]: TrelloCardCompiled[] });
 }
