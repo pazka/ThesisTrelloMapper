@@ -11,10 +11,11 @@ function App() {
 
     return (
         <div style={{
-            height: "100vh"
+            height: "100vh",
+            display : "flex"
         }}>
-            <MapDisplay/>
             <TrelloControls/>
+            <MapDisplay/>
         </div>
     );
 }

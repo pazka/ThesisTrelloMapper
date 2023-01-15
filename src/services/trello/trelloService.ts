@@ -33,21 +33,21 @@ export async function fetchTrelloLists(): Promise<TrelloList[]> {
     return await data.json()
 }
 
-export interface TrelloCardWithList extends TrelloCard {
+export interface TrelloCardCompiled extends TrelloCard {
     _compiled: {
-        listName?: string
+        listName: string
         listData?: TrelloList
         dateFromListName?: Date | null
     }
 }
 
-function injectListInformations(cards: TrelloCard[], lists: TrelloList[]): TrelloCardWithList[] {
+function injectListInformations(cards: TrelloCard[], lists: TrelloList[]): TrelloCardCompiled[] {
     return cards.map(card => {
         const list = lists.find(list => list.id === card.idList)
         return {
             ...card,
             _compiled: {
-                listName: list?.name,
+                listName: list?.name ?? "Unclassified",
                 listData: list,
                 dateFromListName: getDateOfCardFromListTitle(list?.name)
             }
@@ -66,14 +66,14 @@ function getDateOfCardFromListTitle(listName?: string): Date | null {
     }
 
     return new Date(
-        parseInt("20"+date[3]), // so that the year isn't 1923
-        parseInt(date[2])-1, // minus one so that january is 0
-        parseInt(date[1])+1 // wtf why +1 I don't know
+        parseInt("20" + date[3]), // so that the year isn't 1923
+        parseInt(date[2]) - 1, // minus one so that january is 0
+        parseInt(date[1]) + 1 // wtf why +1 I don't know
     )
-} 
+}
 
 
-export async function getTrelloCardsWithList(): Promise<TrelloCardWithList[]> {
+export async function getTrelloCardsWithList(): Promise<TrelloCardCompiled[]> {
     const cards = await fetchTrelloCards()
     const lists = await fetchTrelloLists()
 
