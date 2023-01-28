@@ -1,3 +1,5 @@
+import {TrelloCardCompiled} from "../trello/trelloService";
+
 const uluru = {lat: -25.363, lng: 131.044};
 
 

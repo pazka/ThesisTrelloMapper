@@ -19,11 +19,11 @@ Website that allow for a display of an specific trello agile kanban, to be displ
 ## Rules of mapping from Trello to Maps
 
 - Marker Position = POS Tag in the description or random
-- Marker Color = Label color dsplayed in concentric cirlcle around the marker
+- Marker Color = Label color displayed in concentric circle around the marker
 - Urgent Label = specific maker PNG
 - Marker Title = Card Title
 - Marker Description = Card Description 
-- Card TODO = List with crossed items in Marker descirption
+- Card TODO = List with crossed items in Marker description
 - Card Last Update Date = Small date ate top of marker
 - Navigation Menu Lists = Trello Lists
 - Card Label give sorting order in the Navigation Menu

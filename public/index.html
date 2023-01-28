@@ -23,11 +23,15 @@
         Learn how to configure a non-root public URL by running `npm run build`.
       -->
     <title>Thesis Trello Mapper</title>
-
+    <script>function mapsLoaded(...param) {
+        console.log("maps API has loaded", param)
+    }</script>
     <script src="https://code.jquery.com/jquery-3.6.3.slim.min.js"
             integrity="sha256-ZwqZIVdD3iXNyGHbSYdsmWP//UBokj2FHAxKuSBKDSo=" crossorigin="anonymous"></script>
-    <script async defer  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaYQ0yy76owBCbSktZL1vIBhfZEa4ibHQ"></script>
-    <script src="https://trello.com/1/client.js?key=YGZH0dNdld7cMw66ZgSt0125"   type="text/javascript"></script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCaYQ0yy76owBCbSktZL1vIBhfZEa4ibHQ&callback=mapsLoaded"></script>
+    <script src="https://trello.com/1/client.js?key=YGZH0dNdld7cMw66ZgSt0125" type="text/javascript"></script>
+
 </head>
 
 <body>

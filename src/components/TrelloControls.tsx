@@ -22,7 +22,7 @@ export default function TrelloControls() {
 
     return <nav style={{
         overflow: "auto",
-    }}>
+    }} className={"scrollbar"}>
         <h1>Alessia Sanna - Journal de Bord</h1>
         {!trelloCardsCompiled && <p>Loading...</p>}
         <div>

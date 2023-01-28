@@ -58,17 +58,16 @@ function injectListInformationsInCard(cards: TrelloCard[], lists: TrelloList[]):
 
 export function injectLabelsInformationsInBoard(board: TrelloBoard): TrelloBoardCompiled {
     const labels = board.labelNames
-    const keptLabels = Object.keys(labels).reduce((acc: TrelloLabels, key) => {
-        if (labels[key] !== "") {
-            acc[key] = labels[key]
-        }
-        return acc
-    }, {})
-
+    const labelToColor: TrelloLabelList = {}
+    
+    Object.keys(labels).forEach(color => {
+        labelToColor[labels[color]] = color
+    })
+    
     return {
         ...board,
         _compiled: {
-            realLabels: keptLabels
+            labelToColor
         }
     }
 }

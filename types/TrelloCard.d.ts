@@ -45,20 +45,7 @@ export interface TrelloCard {
     idMembersVoted: [],
     idShort: number // ex. 19,
     idAttachmentCover: null,
-    "labels": [
-        {
-            "id": string, // ex. 63aeb1d9bd0b46356de3a090",
-            "idBoard": string, // ex. 6241fcc7a56cbd7b5fee8b14",
-            "name": string, // ex. AUTRE - COLLOQUE / SDD",
-            "color": string, // ex. orange"
-        },
-        {
-            "id": string, // ex. 63aeb28007d3c500915be28f",
-            "idBoard": string, // ex. 6241fcc7a56cbd7b5fee8b14",
-            "name": string, // ex. ENTREPRISE - MISSION",
-            "color": string, // ex. red"
-        }
-    ],
+    labels: TrelloLabels[],
     limits: {
         attachments: {
             perCard: {
