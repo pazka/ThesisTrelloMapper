@@ -1,12 +1,5 @@
-import {useEffect, useRef, useState} from "react"
-import {initMap} from "../services/maps/mapService";
-import {
-    fetchTrelloCards,
-    fetchTrelloLists, getDateOfCardFromListTitle,
-    getTrelloCardsWithList, groupTrelloCardsByListName,
-    TrelloCardCompiled
-} from "../services/trello/trelloService";
-import {TrelloCard} from "../../types/TrelloCard";
+import {useEffect, useState} from "react"
+import {getTrelloCardsWithList, groupTrelloCardsByListName, TrelloCardCompiled} from "../services/trello/trelloService";
 import TrelloListMenu from "./TrelloList";
 
 export default function TrelloControls() {

@@ -1,7 +1,7 @@
 /* width */
 .scrollbar::-webkit-scrollbar {
     width: 10px;
-}
+}rgba
 
 /* Track */
 .scrollbar::-webkit-scrollbar-track {
@@ -24,18 +24,34 @@
     margin-right: 5px;
 }
 
+#list-menu ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+#list-menu li {
+}
+
 #list-menu li a {
     display: flex;
     align-items: center;
     text-decoration: none;
     color: inherit;
 }
+
 #list-menu li {
     transition : all 0.2s ease;
+    border-width: 1px;
+    border-bottom-color: rgba(0,0,0,0);
+    border-left-color: rgba(0,0,0,0);
+    border-top-color: rgba(0,0,0,0);
+    border-right-color: rgba(0,0,0,0);
+    border-style: solid;
 }
+
 #list-menu li:hover {
     transition : all 0s ease;
-    background-color: black;
-    color:white
+    border-bottom-color: black;
+    border-left-color: black;
 }
 
