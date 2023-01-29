@@ -101,7 +101,7 @@ export function getDateOfCardFromListTitle(listName?: string): Date {
 
 export async function getTrelloCardsWithList(): Promise<TrelloCardCompiled[]> {
     const cards = fetchTrelloCards()
-    const lists = fetchTrelloLists()
+    const lists = fetchTrelloLists().then(lists => lists.map(removeAllEmojiFromTrelloListName))
     const labels = fetchTrelloBoard()
     const checklists = fetchTrelloChecklists()
 
@@ -143,6 +143,13 @@ export async function fetchTrelloLists(): Promise<TrelloList[]> {
     return await data.json()
 }
 
+function removeAllEmojiFromTrelloListName(list: TrelloList): TrelloList {
+    const name = list.name.replace(/[^\p{L}\p{N}\p{P}\p{Z}^$\n]/gu, "")
+    return {
+        ...list,
+        name
+    }
+}
 
 export async function fetchTrelloBoard(): Promise<TrelloBoardCompiled> {
     //make fetch api call to trello for getting the lists of the boars
