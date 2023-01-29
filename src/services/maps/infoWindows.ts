@@ -1,6 +1,7 @@
 import {TrelloCardCompiled} from "../trello/trelloService";
 import {convertLabelsToSvgUrl, trelloColorToRGB} from "../../components/TrelloLabelsIcon";
 import {getTextColorFromBackgroundColor} from "../myMath";
+import {TrelloChecklist} from "../../../types/TrelloChecklist";
 
 const allInfoWindows: {card:TrelloCardCompiled,marker : google.maps.Marker,elem: google.maps.InfoWindow }[] = [];
 
@@ -8,6 +9,22 @@ let currentOpenedInfoWindow: google.maps.InfoWindow;
 
 function capitalizeFirstLetters(str: string) {
     return str.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
+}
+
+function generateChecklistText(checklist: TrelloChecklist): string {
+    return `
+        <div>
+            <h3>${checklist.name}</h3>
+            <ul>
+            ${checklist.checkItems.map((item) => `
+                <li>
+                    ${item.state === "complete" ? "✅" : "⬛"}
+                    ${item.name}
+                </li>
+            `).join(" ")}
+            </ul>
+        </div>
+    `
 }
 function renderCardContent(card: TrelloCardCompiled): string {
     const labels = convertLabelsToSvgUrl(card.labels)
@@ -28,6 +45,9 @@ function renderCardContent(card: TrelloCardCompiled): string {
             <a href="${card.url}" target="_blank">🔗 Link to trello</a> 
             <div class="map-description">
                 ${card.desc}
+            </div>
+            <div>
+                ${card._compiled.checklists?.map(generateChecklistText).join("\n")}
             </div>
         </div>
     `

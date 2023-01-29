@@ -21,10 +21,10 @@ Website that allow for a display of an specific trello agile kanban, to be displ
 - [ ] Marker Position = POS Tag in the description 
 - [x] Marker position = random if no POS Tag
 - [x] Marker Color = Label color displayed in concentric circle around the marker
-- [ ] Urgent Label = specific maker PNG
+- [X] Urgent Label = specific maker PNG
 - [x] Marker Title = Card Title
 - [x] Marker Description = Card Description 
-- [ ] Card TODO = List with crossed items in Marker description
+- [X] Card TODO = List with crossed items in Marker description
 - [ ] Card Last Update Date = Small date ate top of marker
 - [x] Navigation Menu Lists = Trello Lists
 - [ ] Card Label give sorting order in the Navigation Menu
