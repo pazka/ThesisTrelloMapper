@@ -25,10 +25,6 @@ export function convertLabelsToSvgUrl(labels: TrelloLabel[], iconSize: number = 
     ).join()
     }</svg>`
 
-    if (labels.map(l => l.name).includes("URGENT")) {
-        svgString = warningSvg
-    }
-    
     const encodedSvgString = unescape(encodeURIComponent(svgString));
     var base64 = btoa(encodedSvgString).replace("==", "");
     return `data:image/svg+xml;utf8, ${svgString}`
@@ -48,8 +44,15 @@ export function TrelloLabelsIcon({
 }
 
 function getCirclesForIcon(labels: TrelloLabel[], iconSize: number = 20) {
-    const colors = labels.map(label => label.color)
+    
+    //urgent label case
+    const colors = labels.sort(
+        (a, b) => a.name != "URGENT" ? 1 : -1
+    ).map(label => 
+        label.name == "URGENT" ? "rgb(255,0,0)" : label.color
+    )
 
+    // no label case
     if (colors.length === 0) return [{
         center: iconSize / 2,
         radius: iconSize / 2,
@@ -61,7 +64,7 @@ function getCirclesForIcon(labels: TrelloLabel[], iconSize: number = 20) {
     }]
 
     //create svg concentric circles for each color
-    return colors.map((color, index) => {
+    const circles = colors.map((color, index) => {
         const i = colors.length - index;
         const radius = (i / colors.length * iconSize) / 2;
         const center = iconSize / 2;
@@ -71,6 +74,8 @@ function getCirclesForIcon(labels: TrelloLabel[], iconSize: number = 20) {
         //reduce the size at each iteration
         return {radius, center, normalizedColor}
     })
+
+    return circles
 }
 
 export function trelloColorToRGB(str: string, separator: string = "_"): string {
