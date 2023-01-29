@@ -1,22 +1,33 @@
 import {TrelloCardCompiled} from "../trello/trelloService";
 import {convertLabelsToSvgUrl, trelloColorToRGB} from "../../components/TrelloLabelsIcon";
+import {getTextColorFromBackgroundColor} from "../myMath";
 
-const allInfoWindows: {id:string,marker : google.maps.Marker,elem: google.maps.InfoWindow }[] = [];
+const allInfoWindows: {card:TrelloCardCompiled,marker : google.maps.Marker,elem: google.maps.InfoWindow }[] = [];
 
 let currentOpenedInfoWindow: google.maps.InfoWindow;
 
+function capitalizeFirstLetters(str: string) {
+    return str.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
+}
 function renderCardContent(card: TrelloCardCompiled): string {
     const labels = convertLabelsToSvgUrl(card.labels)
 
     return `
         <div class="map-card">
             <h1>
-                ${card.name} <a href="${card.url}" target="_blank">🔗</a> 
+                ${capitalizeFirstLetters(card.name)} 
             </h1>
             <div class="map-badges">
-                ${card.labels.map((label: TrelloLabel) => `<div style="background-color: ${trelloColorToRGB(label.color)}">
+                ${card.labels.map((label: TrelloLabel) => `<div style="
+                    background-color:${trelloColorToRGB(label.color)};
+                    color : ${getTextColorFromBackgroundColor(trelloColorToRGB(label.color))}
+                ">
                     ${label.name}
                 </div>`).join(" ")}
+            </div>
+            <a href="${card.url}" target="_blank">🔗 Link to trello</a> 
+            <div class="map-description">
+                ${card.desc}
             </div>
         </div>
     `
@@ -28,7 +39,7 @@ export function createNewInfoWindow(marker: google.maps.Marker, card: TrelloCard
         ariaLabel: card.name,
     })
     
-    allInfoWindows.push({id: card.id,marker, elem: cardInfos});
+    allInfoWindows.push({card,marker, elem: cardInfos});
 
     marker.addListener("click", () => {
         openAnInfoWindows(card.id);
@@ -38,7 +49,7 @@ export function createNewInfoWindow(marker: google.maps.Marker, card: TrelloCard
 }
 
 export function openAnInfoWindows(id: string): void {
-    const infoWindow = allInfoWindows.find(infoWindow => infoWindow.id === id);
+    const infoWindow = allInfoWindows.find(infoWindow => infoWindow.card.id === id);
     if (infoWindow) {
         infoWindow.elem.open({
             anchor: infoWindow.marker,
@@ -46,5 +57,8 @@ export function openAnInfoWindows(id: string): void {
         });
         currentOpenedInfoWindow?.close()
         currentOpenedInfoWindow = infoWindow.elem;
+        window.history.pushState(infoWindow.card.name, "","#"+id);
+    }else{
+        console.error("infoWindow not found", id);
     }
 }

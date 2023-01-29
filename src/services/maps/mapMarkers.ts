@@ -18,7 +18,6 @@ export function convertTrelloCardToMarker(map: google.maps.Map, card: TrelloCard
         position: new google.maps.LatLng(lat, lng),
         title: card.name,
         icon: {
-            size: new google.maps.Size(20, 20),
             url: convertLabelsToSvgUrl(card.labels, 20),
             labelOrigin: new google.maps.Point(0, 30),
         }

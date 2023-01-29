@@ -1,4 +1,5 @@
 import {darken, lighten} from "@mui/material";
+import {warningSvg} from "./warningSvg";
 
 interface TrelloLabelsIconProps {
     labels: TrelloLabel[],
@@ -7,7 +8,8 @@ interface TrelloLabelsIconProps {
 }
 
 export function convertLabelsToSvgUrl(labels: TrelloLabel[], iconSize: number = 20): string {
-    const svgString = `<svg 
+
+    let svgString = `<svg 
             width="${iconSize}px" 
             height = "${iconSize}px" 
             viewBox="0 0 ${iconSize} ${iconSize}" 
@@ -23,6 +25,10 @@ export function convertLabelsToSvgUrl(labels: TrelloLabel[], iconSize: number = 
     ).join()
     }</svg>`
 
+    if (labels.map(l => l.name).includes("URGENT")) {
+        svgString = warningSvg
+    }
+    
     const encodedSvgString = unescape(encodeURIComponent(svgString));
     var base64 = btoa(encodedSvgString).replace("==", "");
     return `data:image/svg+xml;utf8, ${svgString}`
@@ -50,7 +56,7 @@ function getCirclesForIcon(labels: TrelloLabel[], iconSize: number = 20) {
         normalizedColor: "rgb(0,0,255)"
     }, {
         center: iconSize / 2,
-        radius: iconSize / 2-2,
+        radius: iconSize / 2 - 2,
         normalizedColor: "black"
     }]
 

@@ -1,10 +1,12 @@
+const darkColor = "#000000";
+
 export default [
     {
         "featureType": "administrative",
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -16,7 +18,7 @@ export default [
         "elementType": "labels",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -28,7 +30,7 @@ export default [
         "elementType": "labels.text",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -37,7 +39,7 @@ export default [
         "elementType": "labels.icon",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -70,7 +72,7 @@ export default [
                 "visibility": "off"
             },
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -79,10 +81,10 @@ export default [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#050505"
+                "color": darkColor
             },
             {
-                "visibility": "on"
+                "visibility": "off"
             }
         ]
     },
@@ -91,7 +93,7 @@ export default [
         "elementType": "labels.text",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -127,7 +129,7 @@ export default [
         "elementType": "labels.icon",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -136,7 +138,7 @@ export default [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -145,7 +147,7 @@ export default [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -154,7 +156,7 @@ export default [
         "elementType": "all",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -187,7 +189,7 @@ export default [
         "elementType": "labels.text",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -196,7 +198,7 @@ export default [
         "elementType": "labels.icon",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -217,7 +219,7 @@ export default [
         "elementType": "labels.text",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -226,7 +228,7 @@ export default [
         "elementType": "labels.icon",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -244,7 +246,7 @@ export default [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             }
         ]
     },
@@ -253,7 +255,7 @@ export default [
         "elementType": "labels",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -265,7 +267,7 @@ export default [
         "elementType": "labels.icon",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -322,7 +324,7 @@ export default [
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -334,7 +336,7 @@ export default [
         "elementType": "labels",
         "stylers": [
             {
-                "color": "#000000"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -346,7 +348,7 @@ export default [
         "elementType": "labels.icon",
         "stylers": [
             {
-                "color": "#040404"
+                "color": darkColor
             },
             {
                 "visibility": "off"
@@ -358,7 +360,7 @@ export default [
         "elementType": "all",
         "stylers": [
             {
-                "visibility": "off"
+                "color": "#000000"
             }
         ]
     },

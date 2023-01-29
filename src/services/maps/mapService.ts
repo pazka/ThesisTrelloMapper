@@ -11,6 +11,7 @@ export function getMap(): google.maps.Map {
 //Google api key management :
 //https://console.cloud.google.com/apis/credentials/key/266d720e-fb5b-4dff-8e32-ebceeb64f55f?project=getkeywords-157712
 export function initMap(mapRef: HTMLElement): google.maps.Map {
+    if(GoogleMapContext) return GoogleMapContext;
 
     GoogleMapContext = new google.maps.Map(
         mapRef,
@@ -26,7 +27,7 @@ export function initMap(mapRef: HTMLElement): google.maps.Map {
 
     trelloFetchObserver$.subscribe({
             next: (data) => {
-                console.log(data)
+                console.log("starting global trello convertion ")
                 data[0].forEach((card) => {
                     convertTrelloCardToMarker(GoogleMapContext, card);
                 });
@@ -38,3 +39,4 @@ export function initMap(mapRef: HTMLElement): google.maps.Map {
 
     return GoogleMapContext
 }
+
