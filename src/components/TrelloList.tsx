@@ -26,10 +26,9 @@ export default function TrelloListMenu(
             expandIcon={<ExpandMore/>}
             aria-controls={"trello-list" + listData.id}
             id={"trello-list" + listData.id}
+            className={"list-menu-name"}
         >
-            <Typography sx={{fontSize:"small", width: '33%', flexShrink: 0, fontWeight: "800"}}>
                 {listData.name}
-            </Typography>
         </AccordionSummary>
         <AccordionDetails>
             <ul>

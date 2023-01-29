@@ -4,7 +4,8 @@ import {warningSvg} from "./warningSvg";
 interface TrelloLabelsIconProps {
     labels: TrelloLabel[],
     className?: string,
-    sx?: any
+    sx?: any,
+    iconSize?: number
 }
 
 export function convertLabelsToSvgUrl(labels: TrelloLabel[], iconSize: number = 20): string {
@@ -33,11 +34,10 @@ export function convertLabelsToSvgUrl(labels: TrelloLabel[], iconSize: number = 
 export function TrelloLabelsIcon({
                                      labels = [],
                                      className,
-                                     sx
+                                     sx,
+                                     iconSize = 20
                                  }: TrelloLabelsIconProps) {
     if (labels.length === 0) return <></>
-
-    const iconSize = 20;
 
     return <img {...{className, sx}} width={iconSize} src={convertLabelsToSvgUrl(labels, iconSize)}
                 alt={"trello icon"}/>

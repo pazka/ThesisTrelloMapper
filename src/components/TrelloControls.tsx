@@ -23,9 +23,7 @@ export default function TrelloControls() {
     const cardsGroupedByListName = groupTrelloCardsByListName(trelloCardsCompiled ?? []);
     const displayableListNames = getDisplayableListNames(Object.keys(cardsGroupedByListName)).reverse()
 
-    return <nav style={{
-        overflow: "auto",
-    }} className={"scrollbar"}>
+    return <nav className={"nav-controls scrollbar"}>
         <h1>Carnet de bord</h1>
         {!trelloCardsCompiled && <p>Loading...</p>}
         <div>

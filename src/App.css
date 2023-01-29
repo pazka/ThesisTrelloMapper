@@ -1,7 +1,7 @@
 /* width */
 .scrollbar::-webkit-scrollbar {
     width: 10px;
-}rgba
+}
 
 /* Track */
 .scrollbar::-webkit-scrollbar-track {
@@ -18,9 +18,14 @@
     background: #555;
 }
 
+.nav-controls{
+    width : 15%;
+    overflow-y: auto;
+}
+
 .trello-icon {
-    width: 20px;
-    height: 20px;
+    width: 1.2em;
+    height: 1.2em;
     margin-right: 5px;
 }
 
@@ -29,7 +34,15 @@
     margin: 0;
     padding: 0;
 }
-#list-menu li {
+
+#list-menu {
+    font-size: 0.8rem;
+}
+
+.list-menu-name{
+    font-size:small;
+    flex-shrink: 0;
+    font-weight: 800;
 }
 
 #list-menu li a {
@@ -59,6 +72,10 @@
     
 }
 
+.map-card h1{
+    margin: 0;
+}
+
 .map-badges{
     display: flex;
     flex-wrap: wrap;
@@ -66,12 +83,10 @@
 }
 
 .map-badges > * {
-    border-radius: 5px;
-    color : white;
-    padding: 0.5em;
-    margin-left: 0em 0.5em;
-    font-weight: bold;
-    width: fit-content;
+    width:1.5em;
+    height:1.5em;
+    border-radius: 0.75em;
+    margin-left: 0.5em;
 }
 
 

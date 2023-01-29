@@ -87,7 +87,7 @@ export function removePlanywayDataFromCard(card: TrelloCardCompiled): TrelloCard
 
 export async function getTrelloCardsWithList(): Promise<TrelloCardCompiled[]> {
     const cards = fetchTrelloCards()
-    const lists = fetchTrelloLists().then(lists => lists.map(removeAllEmojiFromTrelloListName))
+    const lists = fetchTrelloLists().then(lists => lists.map(removeAllEmojiFromTrelloListName).map(removeWordsFromTrelloListName))
     const labels = fetchTrelloBoard()
     const checklists = fetchTrelloChecklists()
 
@@ -131,6 +131,14 @@ export async function fetchTrelloLists(): Promise<TrelloList[]> {
 
 function removeAllEmojiFromTrelloListName(list: TrelloList): TrelloList {
     const name = list.name.replace(/[^\p{L}\p{N}\p{P}\p{Z}^$\n]/gu, "")
+    return {
+        ...list,
+        name
+    }
+}
+
+function removeWordsFromTrelloListName(list: TrelloList): TrelloList {
+    const name = list.name.replace(/(FAIT)/gi, "")
     return {
         ...list,
         name

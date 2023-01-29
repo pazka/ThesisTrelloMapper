@@ -47,9 +47,7 @@ function renderCardContent(card: TrelloCardCompiled): string {
                 ${card.labels.map((label: TrelloLabel) => `<div style="
                     background-color:${trelloColorToRGB(label.color)};
                     color : ${getTextColorFromBackgroundColor(trelloColorToRGB(label.color))}
-                ">
-                    ${label.name}
-                </div>`).join(" ")}
+                "></div>`).join(" ")}
             </div>
             <a href="${card.url}" target="_blank">🔗 Link to trello</a> 
             <div class="map-description">
