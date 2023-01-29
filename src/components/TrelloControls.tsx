@@ -1,12 +1,21 @@
 import {useEffect, useState} from "react"
-import {getTrelloCardsWithList, groupTrelloCardsByListName, TrelloCardCompiled} from "../services/trello/trelloService";
+import {groupTrelloCardsByListName, TrelloCardCompiled, trelloFetchObserver$} from "../services/trello/trelloService";
 import TrelloListMenu from "./TrelloList";
 
 export default function TrelloControls() {
     const [trelloCardsCompiled, setTrelloCardCompiled] = useState<TrelloCardCompiled[]>();
 
     useEffect(() => {
-        getTrelloCardsWithList().then(setTrelloCardCompiled);
+        trelloFetchObserver$.subscribe({
+                next: (data) => {
+                    console.log("trelloFetchObserver$ data", data);
+                    // @ts-ignore
+                    setTrelloCardCompiled(data[0]);
+                },
+                error: error => console.error(error),
+                complete: () => console.log("trelloFetchObserver completed")
+            }
+        )
     }, [])
 
     //cards sorted by listName

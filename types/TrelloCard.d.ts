@@ -40,6 +40,7 @@ export interface TrelloCard {
     idBoard: string // ex. 6241fcc7a56cbd7b5fee8b14
     idChecklists: [],
     idLabels: [],
+    idShort : string,
     idList: string // ex. 633bedaa4a8c5102268c82a8
     idMembers: [],
     idMembersVoted: [],

@@ -1,5 +1,6 @@
 import example from './export_example.json';
 import {TrelloCard} from "../../../types/TrelloCard";
+import {from, Observable} from "rxjs";
 
 // Trello control interface : https://trello.com/power-ups/63c42162c1ac8002c2aafbdb/edit
 const TRELLO_API_KEY = "7ef26c60b9727dde14ff6ecbe7c2a02a"
@@ -7,32 +8,7 @@ const TRELLO_API_KEY = "7ef26c60b9727dde14ff6ecbe7c2a02a"
 //generated using my perosnnal trello account
 const TRELLO_API_TOKEN = process.env.REACT_APP_TRELLO_TOKEN
 
-export async function mockFetchTrelloCards(): Promise<any[]> {
-    //@ts-ignore
-    return example.cards
-}
-
-//from doc https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-get
-export async function fetchTrelloCards(): Promise<TrelloCard[]> {
-    //make fetch api call to trello
-    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/cards?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
-    return await data.json()
-}
-
-export async function fetchTrelloLists(): Promise<TrelloList[]> {
-    //make fetch api call to trello for getting the lists of the boars
-    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/lists?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
-    return await data.json()
-}
-
-
-export async function fetchTrelloBoard(): Promise<TrelloBoardCompiled> {
-    //make fetch api call to trello for getting the lists of the boars
-    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
-    const jsonData: TrelloBoard = await data.json()
-
-    return injectLabelsInformationsInBoard(jsonData)
-}
+let allCards: TrelloCardCompiled[] = []
 
 export interface TrelloCardCompiled extends TrelloCard {
     _compiled: {
@@ -59,11 +35,11 @@ function injectListInformationsInCard(cards: TrelloCard[], lists: TrelloList[]):
 export function injectLabelsInformationsInBoard(board: TrelloBoard): TrelloBoardCompiled {
     const labels = board.labelNames
     const labelToColor: TrelloLabelList = {}
-    
+
     Object.keys(labels).forEach(color => {
         labelToColor[labels[color]] = color
     })
-    
+
     return {
         ...board,
         _compiled: {
@@ -94,18 +70,11 @@ export async function getTrelloCardsWithList(): Promise<TrelloCardCompiled[]> {
     const cards = await fetchTrelloCards()
     const lists = await fetchTrelloLists()
     const labels = await fetchTrelloBoard()
+    
+    allCards = injectListInformationsInCard(cards, lists)
 
-    return injectListInformationsInCard(cards, lists)
+    return allCards
 }
-
-export async function getGoogleMarkersFromTrelloData(): Promise<google.maps.Marker[]> {
-    const cards = await fetchTrelloCards()
-    const lists = await fetchTrelloLists()
-    const cardsWithList = injectListInformationsInCard(cards, lists)
-
-    return []
-}
-
 
 export function groupTrelloCardsByListName(cards: TrelloCardCompiled[]): { [key: string]: TrelloCardCompiled[] } {
     return cards?.reduce((acc, card: TrelloCardCompiled) => {
@@ -117,3 +86,32 @@ export function groupTrelloCardsByListName(cards: TrelloCardCompiled[]): { [key:
         return acc;
     }, {} as { [key: string]: TrelloCardCompiled[] });
 }
+
+export async function mockFetchTrelloCards(): Promise<any[]> {
+    //@ts-ignore
+    return example.cards
+}
+
+//from doc https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-get
+export async function fetchTrelloCards(): Promise<TrelloCard[]> {
+    //make fetch api call to trello
+    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/cards?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
+    return await data.json()
+}
+
+export async function fetchTrelloLists(): Promise<TrelloList[]> {
+    //make fetch api call to trello for getting the lists of the boars
+    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/lists?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
+    return await data.json()
+}
+
+
+export async function fetchTrelloBoard(): Promise<TrelloBoardCompiled> {
+    //make fetch api call to trello for getting the lists of the boars
+    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
+    const jsonData: TrelloBoard = await data.json()
+
+    return injectLabelsInformationsInBoard(jsonData)
+}
+
+export const trelloFetchObserver$ : Observable<[TrelloCardCompiled[],TrelloBoard]>= from(Promise.all([getTrelloCardsWithList(), fetchTrelloBoard()]))

@@ -55,3 +55,21 @@
     border-left-color: black;
 }
 
+.map-card{
+    
+}
+
+.map-badges{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.map-badges > * {
+    border-radius: 5px;
+    color : white;
+    padding: 0.5em;
+    margin-left: 0 0.5em;
+    font-weight: bold;
+    width: fit-content;
+}
+

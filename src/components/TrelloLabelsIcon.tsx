@@ -6,17 +6,21 @@ interface TrelloLabelsIconProps {
     sx?: any
 }
 
-export function convertLabelToIconSvg(labels: TrelloLabel[], iconSize: number = 20): string {
-    const svgString = `<svg viewBox="0 0 ${iconSize} ${iconSize}" xmlns='http://www.w3.org/2000/svg'>
-        ${
-        getCirclesForIcon(labels, iconSize).map((dim, index) =>
-            `<circle 
-cx="${dim.center}" 
-cy="${dim.center}" 
-r="${dim.radius}" 
-fill="${dim.normalizedColor}" 
-/>`
-        ).join()
+export function convertLabelsToSvgUrl(labels: TrelloLabel[], iconSize: number = 20): string {
+    const svgString = `<svg 
+            width="${iconSize}px" 
+            height = "${iconSize}px" 
+            viewBox="0 0 ${iconSize} ${iconSize}" 
+            xmlns='http://www.w3.org/2000/svg'
+        >
+        ${getCirclesForIcon(labels, iconSize).map((dim, index) =>
+        `<circle 
+                cx="${dim.center}" 
+                cy="${dim.center}" 
+                r="${dim.radius}" 
+                fill="${dim.normalizedColor}" 
+            />`
+    ).join()
     }</svg>`
 
     const encodedSvgString = unescape(encodeURIComponent(svgString));
@@ -33,11 +37,22 @@ export function TrelloLabelsIcon({
 
     const iconSize = 20;
 
-    return <img {...{className,sx}} width={iconSize} src={convertLabelToIconSvg(labels,iconSize)} alt={"trello icon"}/>
+    return <img {...{className, sx}} width={iconSize} src={convertLabelsToSvgUrl(labels, iconSize)}
+                alt={"trello icon"}/>
 }
 
 function getCirclesForIcon(labels: TrelloLabel[], iconSize: number = 20) {
     const colors = labels.map(label => label.color)
+
+    if (colors.length === 0) return [{
+        center: iconSize / 2,
+        radius: iconSize / 2,
+        normalizedColor: "rgb(0,0,255)"
+    }, {
+        center: iconSize / 2,
+        radius: iconSize / 2-2,
+        normalizedColor: "black"
+    }]
 
     //create svg concentric circles for each color
     return colors.map((color, index) => {
@@ -45,14 +60,14 @@ function getCirclesForIcon(labels: TrelloLabel[], iconSize: number = 20) {
         const radius = (i / colors.length * iconSize) / 2;
         const center = iconSize / 2;
 
-        const normalizedColor = normalizeColor(color);
+        const normalizedColor = trelloColorToRGB(color);
 
         //reduce the size at each iteration
         return {radius, center, normalizedColor}
     })
 }
 
-function normalizeColor(str: string, separator: string = "_"): string {
+export function trelloColorToRGB(str: string, separator: string = "_"): string {
     const parts = str.split(separator);
     const colorReversed = parts.reverse().join("");
 
