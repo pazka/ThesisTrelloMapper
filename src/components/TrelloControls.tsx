@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react"
 import {groupTrelloCardsByListName, TrelloCardCompiled, trelloFetchObserver$} from "../services/trello/trelloService";
 import TrelloListMenu from "./TrelloList";
+import {getDisplayableListNames} from "../services/trello/trelloUtils";
 
 export default function TrelloControls() {
     const [trelloCardsCompiled, setTrelloCardCompiled] = useState<TrelloCardCompiled[]>();
@@ -20,15 +21,15 @@ export default function TrelloControls() {
 
     //cards sorted by listName
     const cardsGroupedByListName = groupTrelloCardsByListName(trelloCardsCompiled ?? []);
-    const listNamesSortedByDate = Object.keys(cardsGroupedByListName)
+    const displayableListNames = getDisplayableListNames(Object.keys(cardsGroupedByListName)).reverse()
 
     return <nav style={{
         overflow: "auto",
     }} className={"scrollbar"}>
-        <h1>Alessia Sanna - Journal de Bord</h1>
+        <h1>Carnet de bord</h1>
         {!trelloCardsCompiled && <p>Loading...</p>}
         <div>
-            {listNamesSortedByDate.map((listName) => <TrelloListMenu
+            {displayableListNames.map((listName) => <TrelloListMenu
                 key={listName}
                 cards={cardsGroupedByListName ? cardsGroupedByListName[listName] : []}
             />)}

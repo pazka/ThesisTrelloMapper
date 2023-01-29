@@ -11,7 +11,7 @@ function capitalizeFirstLetters(str: string) {
     return str.split(" ").map((word) => word.charAt(0).toUpperCase() + word.slice(1)).join(" ")
 }
 
-function generateChecklistText(checklist: TrelloChecklist): string {
+function renderChecklistText(checklist: TrelloChecklist): string {
     return `
         <div>
             <h3>${checklist.name}</h3>
@@ -26,11 +26,20 @@ function generateChecklistText(checklist: TrelloChecklist): string {
         </div>
     `
 }
+
+function renderCoverImage(card: TrelloCardCompiled): string {
+    if(!card.cover) return ""
+    
+    return `
+        <div class="map-cover-image" style="background-image: url(${card.cover?.idUploadedBackground})"></div>
+    `
+}
 function renderCardContent(card: TrelloCardCompiled): string {
     const labels = convertLabelsToSvgUrl(card.labels)
 
     return `
         <div class="map-card">
+            ${renderCoverImage(card)}
             <h1>
                 ${capitalizeFirstLetters(card.name)} 
             </h1>
@@ -47,7 +56,7 @@ function renderCardContent(card: TrelloCardCompiled): string {
                 ${card.desc}
             </div>
             <div>
-                ${card._compiled.checklists?.map(generateChecklistText).join("\n")}
+                ${card._compiled.checklists?.map(renderChecklistText).join("\n")}
             </div>
         </div>
     `

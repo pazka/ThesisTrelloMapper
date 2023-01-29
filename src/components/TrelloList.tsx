@@ -27,7 +27,7 @@ export default function TrelloListMenu(
             aria-controls={"trello-list" + listData.id}
             id={"trello-list" + listData.id}
         >
-            <Typography sx={{width: '33%', flexShrink: 0, fontWeight: "800"}}>
+            <Typography sx={{fontSize:"small", width: '33%', flexShrink: 0, fontWeight: "800"}}>
                 {listData.name}
             </Typography>
         </AccordionSummary>

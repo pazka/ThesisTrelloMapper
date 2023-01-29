@@ -2,6 +2,7 @@ import example from './export_example.json';
 import {TrelloCard} from "../../../types/TrelloCard";
 import {from, Observable} from "rxjs";
 import {TrelloChecklist} from "../../../types/TrelloChecklist";
+import {getDateOfCardFromListTitle} from "./trelloUtils";
 
 // Trello control interface : https://trello.com/power-ups/63c42162c1ac8002c2aafbdb/edit
 const TRELLO_API_KEY = "7ef26c60b9727dde14ff6ecbe7c2a02a"
@@ -23,17 +24,18 @@ export interface TrelloCardCompiled extends TrelloCard {
 function injectListInformationsInCard(cards: TrelloCard[] | TrelloCardCompiled[], lists: TrelloList[]): TrelloCardCompiled[] {
     return cards.map(card => {
         const list = lists.find(list => list.id === card.idList)
+        if(!list) return null
         return {
             ...card,
             _compiled: {
                 // @ts-ignore
                 ...card._compiled,
                 listName: list?.name ?? "Unclassified",
-                listData: list,
+                listData: list?? {},
                 dateInListName: getDateOfCardFromListTitle(list?.name)
             }
         }
-    })
+    }).filter(x=>x) as TrelloCardCompiled[]
 }
 
 export function injectLabelsInformationsInBoard(board: TrelloBoard): TrelloBoardCompiled {
@@ -81,22 +83,6 @@ export function removePlanywayDataFromCard(card: TrelloCardCompiled): TrelloCard
     return card
 }
 
-export function getDateOfCardFromListTitle(listName?: string): Date {
-    if (!listName)
-        return new Date()
-
-    //Date format is : DD/MM/YY
-    const date = listName.match(/FAIT (\d{2})\/(\d{2})\/(\d{2})/)
-    if (!date) {
-        return new Date()
-    }
-
-    return new Date(
-        parseInt("20" + date[3]), // so that the year isn't 1923
-        parseInt(date[2]) - 1, // minus one so that january is 0
-        parseInt(date[1]) + 1 // wtf why +1 I don't know
-    )
-}
 
 
 export async function getTrelloCardsWithList(): Promise<TrelloCardCompiled[]> {
@@ -133,13 +119,13 @@ export async function mockFetchTrelloCards(): Promise<any[]> {
 //from doc https://developer.atlassian.com/cloud/trello/rest/api-group-boards/#api-boards-id-get
 export async function fetchTrelloCards(): Promise<TrelloCard[]> {
     //make fetch api call to trello
-    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/cards?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
+    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/cards/all?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
     return await data.json()
 }
 
 export async function fetchTrelloLists(): Promise<TrelloList[]> {
     //make fetch api call to trello for getting the lists of the boars
-    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/lists?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
+    const data = await fetch(`https://api.trello.com/1/boards/D6MEwgAM/lists/closed?key=${TRELLO_API_KEY}&token=${TRELLO_API_TOKEN}`)
     return await data.json()
 }
 
