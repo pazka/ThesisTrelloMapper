@@ -1,7 +1,9 @@
-import {useEffect, useState} from "react"
+import React, {useEffect, useState} from "react"
 import {groupTrelloCardsByListName, TrelloCardCompiled, trelloFetchObserver$} from "../services/trello/trelloService";
 import TrelloListMenu from "./TrelloList";
 import {getDisplayableListNames} from "../services/trello/trelloUtils";
+import {Button} from "@mui/material";
+import {Visibility, VisibilityOff} from "@mui/icons-material";
 
 export default function TrelloControls() {
     const [trelloCardsCompiled, setTrelloCardCompiled] = useState<TrelloCardCompiled[]>();
@@ -27,10 +29,13 @@ export default function TrelloControls() {
         <h1>Carnet de bord</h1>
         {!trelloCardsCompiled && <p>Loading...</p>}
         <div>
-            {displayableListNames.map((listName) => <TrelloListMenu
-                key={listName}
-                cards={cardsGroupedByListName ? cardsGroupedByListName[listName] : []}
-            />)}
+            {displayableListNames.map((listName) => <div>
+                    <TrelloListMenu
+                        key={listName}
+                        cards={cardsGroupedByListName ? cardsGroupedByListName[listName] : []}
+                    />
+                </div>
+            )}
         </div>
     </nav>
 }

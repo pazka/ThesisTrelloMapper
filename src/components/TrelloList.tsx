@@ -1,7 +1,7 @@
 import {TrelloCardCompiled} from "../services/trello/trelloService";
 import React from "react";
-import {Accordion, AccordionDetails, AccordionSummary, Link, Typography} from "@mui/material";
-import {ExpandMore} from "@mui/icons-material";
+import {Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Link, Typography} from "@mui/material";
+import {ExpandMore, Visibility, VisibilityOff} from "@mui/icons-material";
 import {TrelloLabelsIcon} from "./TrelloLabelsIcon";
 
 export default function TrelloListMenu(
@@ -28,12 +28,12 @@ export default function TrelloListMenu(
             id={"trello-list" + listData.id}
             className={"list-menu-name"}
         >
-                {listData.name}
+            {listData.name}
         </AccordionSummary>
         <AccordionDetails>
             <ul>
                 {sortedByDateCards?.map((cardCompiled) => <li key={cardCompiled.id}>
-                    <Link href={"#"+cardCompiled.id} >
+                    <Link href={"#" + cardCompiled.id}>
                         <TrelloLabelsIcon className={"trello-icon"} labels={cardCompiled.labels}/>
                         {cardCompiled.name}
                     </Link>

@@ -1,6 +1,8 @@
 import mapStyle from "./mapStyle";
 import {convertTrelloCardToMarker} from "./mapMarkers";
 import {trelloFetchObserver$} from "../trello/trelloService";
+import {Observable} from "rxjs";
+import * as ro from "rxjs/operators";
 
 let GoogleMapContext: google.maps.Map
 
@@ -10,8 +12,10 @@ export function getMap(): google.maps.Map {
 
 //Google api key management :
 //https://console.cloud.google.com/apis/credentials/key/266d720e-fb5b-4dff-8e32-ebceeb64f55f?project=getkeywords-157712
-export function initMap(mapRef: HTMLElement): google.maps.Map {
-    if(GoogleMapContext) return GoogleMapContext;
+export function initMap(mapRef: HTMLElement | null,callback : Function): google.maps.Map {
+    if (!mapRef) return {} as google.maps.Map;
+
+    if (GoogleMapContext) return GoogleMapContext;
 
     GoogleMapContext = new google.maps.Map(
         mapRef,
@@ -31,6 +35,8 @@ export function initMap(mapRef: HTMLElement): google.maps.Map {
                 data[0].forEach((card) => {
                     convertTrelloCardToMarker(GoogleMapContext, card);
                 });
+
+                callback(data[1])
             },
             error: error => console.error(error),
             complete: () => console.log("google sub trelloFetchObserver completed")
@@ -40,3 +46,4 @@ export function initMap(mapRef: HTMLElement): google.maps.Map {
     return GoogleMapContext
 }
 
+export const googleMapObservable$ = new Observable<google.maps.Map>()
