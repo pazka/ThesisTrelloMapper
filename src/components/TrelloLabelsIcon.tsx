@@ -43,10 +43,10 @@ export function TrelloLabelsIcon({
 }
 
 function getCirclesForIcon(labels: TrelloLabel[], iconSize: number = 20) {
-    
+
     //urgent label case
-    const colors = labels.filter(l=>l.name != "URGENT").map(label =>  label.color)
-    
+    const colors = labels.filter(l => l.name != "URGENT").map(label => label.color)
+
     const isUrgent = labels.some(label => label.name == "URGENT")
 
     // no label case
@@ -59,21 +59,25 @@ function getCirclesForIcon(labels: TrelloLabel[], iconSize: number = 20) {
         radius: iconSize / 2 - 2,
         normalizedColor: "black"
     }]
-    
-    const circles : any[]= [{
-        center: iconSize / 2,
-        radius: iconSize / 2,
-        normalizedColor: "rgb(255,0,0)"
-    }]
-    
+
+    const circles: any[] = [{}]
+
+    if (isUrgent) {
+        circles.push({
+            center: iconSize / 2,
+            radius: iconSize / 2,
+            normalizedColor: "rgb(255,0,0)"
+        })
+    }
+
     //create svg concentric circles for each color
     labels.forEach((label, index) => {
         const i = colors.length - index;
         const center = iconSize / 2;
 
         let radius = (i / colors.length * iconSize) / 2;
-        if(isUrgent) radius = radius * 0.8;
-        
+        if (isUrgent) radius = radius * 0.8;
+
         const normalizedColor = trelloColorToRGB(label.color);
 
         //reduce the size at each iteration
