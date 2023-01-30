@@ -1,8 +1,8 @@
-import {TrelloCardCompiled} from "../services/trello/trelloService";
 import React from "react";
-import {Accordion, AccordionActions, AccordionDetails, AccordionSummary, Button, Link, Typography} from "@mui/material";
-import {ExpandMore, Visibility, VisibilityOff} from "@mui/icons-material";
+import {Accordion, AccordionDetails, AccordionSummary, Link} from "@mui/material";
+import {ExpandMore} from "@mui/icons-material";
 import {TrelloLabelsIcon} from "./TrelloLabelsIcon";
+import {TrelloCardCompiled} from "../../types/TrelloCard";
 
 export default function TrelloListMenu(
     {

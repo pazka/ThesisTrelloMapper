@@ -2,24 +2,28 @@ import {useEffect, useRef, useState} from "react"
 import {googleMapObservable$, initMap} from "../services/maps/mapService";
 import {useLocation} from "react-router-dom";
 import {openAnInfoWindows} from "../services/maps/infoWindows";
+import {trelloFetchObserver$} from "../services/trello/trelloService";
+import {trelloColorToRGB} from "./TrelloLabelsIcon";
+import {getTextColorFromBackgroundColor} from "../services/myMath";
+import {Chip} from "@mui/material";
 
 export default function MapDisplay() {
     const location = useLocation()
     const ref = useRef<HTMLDivElement>(null)
     const [map, setMap] = useState<google.maps.Map>();
-    const [shouldCheck, setShouldCheck] = useState<boolean>(false);
+    const [labels, setLabels] = useState<TrelloLabelList>({});
 
     const openCardIfRouteMatch = () => {
         if (location.hash !== "") {
             openAnInfoWindows(location.hash.slice(1, location.hash.length))
         }
     }
-        
-    
+
+
     useEffect(() => {
         if (ref.current && !map) {
             console.log("map ref changed", ref.current)
-            const map = initMap(ref.current,()=>{
+            const map = initMap(ref.current, () => {
                 openCardIfRouteMatch()
             });
             if (map) {
@@ -27,13 +31,45 @@ export default function MapDisplay() {
             }
         }
     }, [ref, map])
-    
+
     useEffect(() => {
         openCardIfRouteMatch()
-    },[location])
+    }, [location])
 
-    return <div ref={ref} id={"mainMap"} style={{
+    useEffect(() => {
+        trelloFetchObserver$.subscribe({
+            next: (data) => {
+                // @ts-ignore
+                setLabels(data[1].labelNames);
+            }
+        })
+    }, [])
+
+    return <div style={{
+        display: "flex",
+        flexDirection: "column",
         width: "100%",
-        height: "100%"
-    }}/>
+        height: "100%",
+        overflow: "hidden"
+    }}>
+        <div ref={ref} id={"mainMap"} style={{
+            width: "100%",
+            height: "98%"
+        }}/>
+        <div style={{
+            display : "flex",
+            "flexWrap": "wrap",
+            height: "4%",
+            backgroundColor: "black",
+            fontSize: "0.8em",
+        }}>
+            {
+                Object.keys(labels).filter(k => labels[k] != "").sort().map(color => <span style={{display : "flex",marginRight:"2em",alignItems:"center"}}>
+                    <span style={{display:"block",width: "10px", height: "10px",marginRight : "0.5em", backgroundColor: trelloColorToRGB(color)}}></span>
+                    <span style={{color: "white"}}> {labels[color]}</span>
+                    </span>
+                )
+            }
+        </div>
+    </div>
 }

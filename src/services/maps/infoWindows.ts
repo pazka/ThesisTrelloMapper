@@ -1,4 +1,4 @@
-import {TrelloCardCompiled} from "../trello/trelloService";
+import {TrelloCardCompiled} from "../../../types/TrelloCard";
 import {convertLabelsToSvgUrl, trelloColorToRGB} from "../../components/TrelloLabelsIcon";
 import {getTextColorFromBackgroundColor} from "../myMath";
 import {TrelloChecklist} from "../../../types/TrelloChecklist";

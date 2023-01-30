@@ -1,21 +1,29 @@
-import {TrelloCardCompiled} from "../trello/trelloService";
 import {convertLabelsToSvgUrl} from "../../components/TrelloLabelsIcon";
 import {getSeededRandomFromStr} from "../myMath";
 import {createNewInfoWindow} from "./infoWindows";
+import {TrelloCardCompiled} from "../../../types/TrelloCard";
 
 const allMarkers: google.maps.Marker[] = [];
 
-export function convertTrelloCardToMarker(map: google.maps.Map, card: TrelloCardCompiled): google.maps.Marker {
+function getRandomLatLngFromCard(card: TrelloCardCompiled): google.maps.LatLng {
     //creat random location 
     const fngX = (getSeededRandomFromStr(card.id) % 100) / 100;
     const fngY = (getSeededRandomFromStr(card.id) % 100) / 100;
 
     const lat = (fngX * 150) - 75;
     const lng = (fngY * 360) - 180;
-
+    return new google.maps.LatLng(lat, lng)
+}
+export function convertTrelloCardToMarker(map: google.maps.Map, card: TrelloCardCompiled): google.maps.Marker {
+    let position = getRandomLatLngFromCard(card);
+    
+    if(card._compiled.posTag) {
+        position = new google.maps.LatLng(card._compiled.posTag.lat, card._compiled.posTag.lng)
+    }
+    
     const marker = new google.maps.Marker({
         map,
-        position: new google.maps.LatLng(lat, lng),
+        position,
         title: card.name,
         icon: {
             url: convertLabelsToSvgUrl(card.labels, 20),

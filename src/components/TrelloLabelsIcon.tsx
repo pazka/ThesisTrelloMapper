@@ -1,5 +1,4 @@
 import {darken, lighten} from "@mui/material";
-import {warningSvg} from "./warningSvg";
 
 interface TrelloLabelsIconProps {
     labels: TrelloLabel[],

@@ -1,5 +1,5 @@
 import example from './export_example.json';
-import {TrelloCard} from "../../../types/TrelloCard";
+import {TrelloCard, TrelloCardCompiled} from "../../../types/TrelloCard";
 import {from, Observable} from "rxjs";
 import {TrelloChecklist} from "../../../types/TrelloChecklist";
 import {getDateOfCardFromListTitle} from "./trelloUtils";
@@ -12,30 +12,34 @@ const TRELLO_API_TOKEN = process.env.REACT_APP_TRELLO_TOKEN
 
 let allCards: TrelloCardCompiled[] = []
 
-export interface TrelloCardCompiled extends TrelloCard {
-    _compiled: {
-        listName: string
-        listData?: TrelloList
-        dateInListName?: Date | null
-        checklists?: TrelloChecklist[]
+function getPosTagFromCard(card: TrelloCard): { lat: number, lng: number } | null {
+    //check from a line that starts with "POS:" and fetch the pos data in s the ofrmat @48.5511962,7.7479556,15z
+    const posTag = card.desc.match(/POS:.*\n/g)
+    if (posTag) {
+        const posTagStr = posTag[0].replace("POS:", "").replace("\n", "")
+        const posTagStrSplit = posTagStr.split(",")
+        const pos = {lat: parseFloat(posTagStrSplit[0]), lng: parseFloat(posTagStrSplit[1])}
+        return pos;
     }
+    return null
 }
 
 function injectListInformationsInCard(cards: TrelloCard[] | TrelloCardCompiled[], lists: TrelloList[]): TrelloCardCompiled[] {
     return cards.map(card => {
         const list = lists.find(list => list.id === card.idList)
-        if(!list) return null
+        if (!list) return null
         return {
             ...card,
             _compiled: {
                 // @ts-ignore
                 ...card._compiled,
                 listName: list?.name ?? "Unclassified",
-                listData: list?? {},
-                dateInListName: getDateOfCardFromListTitle(list?.name)
+                listData: list ?? {},
+                dateInListName: getDateOfCardFromListTitle(list?.name),
+                posTag: getPosTagFromCard(card)
             }
         }
-    }).filter(x=>x) as TrelloCardCompiled[]
+    }).filter(x => x) as TrelloCardCompiled[]
 }
 
 export function injectLabelsInformationsInBoard(board: TrelloBoard): TrelloBoardCompiled {
@@ -79,10 +83,9 @@ export function removePlanywayDataFromCard(card: TrelloCardCompiled): TrelloCard
             desc: description.substring(0, index)
         }
     }
-    
+
     return card
 }
-
 
 
 export async function getTrelloCardsWithList(): Promise<TrelloCardCompiled[]> {

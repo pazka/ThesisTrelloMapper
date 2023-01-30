@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import type {PayloadAction} from '@reduxjs/toolkit'
-import {TrelloCardCompiled} from "../trello/trelloService";
+import {TrelloCardCompiled} from "../../../types/TrelloCard";
 
 interface TrelloState {
     lists: TrelloList[],

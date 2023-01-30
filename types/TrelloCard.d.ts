@@ -1,3 +1,4 @@
+import {TrelloChecklist} from "./TrelloChecklist";
 
 export interface TrelloCard {
     id: string // ex. 633beddfebbdd60030b35c5a
@@ -108,6 +109,16 @@ export interface TrelloAttachements {
     "pos": number, // ex. 16384,
     "fileName": string, // ex. CR0911_ebay.docx",
     "id": string, // ex. 63aecbee9df17104877ac74b"
+}
+
+export interface TrelloCardCompiled extends TrelloCard {
+    _compiled: {
+        listName: string
+        listData?: TrelloList
+        dateInListName?: Date | null
+        checklists?: TrelloChecklist[],
+        posTag?: { lat: number, lng: number } | null
+    }
 }
 
 export interface TrelloList {

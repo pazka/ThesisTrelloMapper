@@ -13,13 +13,13 @@ Website that allow for a display of an specific trello agile kanban, to be displ
   - ✅ map rules to google Map
 - ✅ Have a menu that displays those markers
 - ⬛ Each list must have a filter that will change the visibility of the markers on the map
-- ⬛ Generate a legend for the map from trello labels data (with color)
+- ✅ Generate a legend for the map from trello labels data (with color)
 - ⬛ Optional : create itinerary from tasks from the same list
 - ✅ Tool to import the latest trello (will use Trello Atlassian API)
 
 ## Rules of mapping from Trello to Maps
 
-- ⬛ Marker Position = POS Tag in the description 
+- ✅ Marker Position = POS Tag in the description 
 - ✅ Marker position = random if no POS Tag
 - ✅ Marker Color = Label color displayed in concentric circle around the marker
 - ✅ Urgent Label = specific maker PNG

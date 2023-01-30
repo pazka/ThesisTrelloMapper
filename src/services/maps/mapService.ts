@@ -2,7 +2,6 @@ import mapStyle from "./mapStyle";
 import {convertTrelloCardToMarker} from "./mapMarkers";
 import {trelloFetchObserver$} from "../trello/trelloService";
 import {Observable} from "rxjs";
-import * as ro from "rxjs/operators";
 
 let GoogleMapContext: google.maps.Map
 
