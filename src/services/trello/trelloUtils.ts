@@ -11,6 +11,7 @@ export function getDisplayableListNames(names: string[]): string[] {
     return names.filter(n=>!ignoredListNames.includes(n.trim())).sort((a, b) => {
         const dateA = getDateOfCardFromListTitle(a)
         const dateB = getDateOfCardFromListTitle(b)
+        
         if (dateA && dateB) {
             return dateA.getTime() - dateB.getTime()
         } else if (dateA) {
@@ -28,7 +29,9 @@ export function getDateOfCardFromListTitle(listName?: string): Date {
         return new Date()
 
     //Date format is : DD/MM/YY
-    const date = listName.match(/FAIT (\d{2})\/(\d{2})\/(\d{2})/)
+    const date = listName.match(/.*(\d{2})\/(\d{2})\/(\d{2}).*/)
+    console.debug(listName,date)
+    
     if (!date) {
         return new Date()
     }
