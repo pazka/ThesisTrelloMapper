@@ -35,7 +35,7 @@ export interface TrelloCard {
     descData: {
         emoji: {}
     },
-    due: null,
+    due: string,
     dueReminder: null,
     email: string // ex. alexandreweis+2pe4hjcmntj2x1agz8d+2z6vfyxo4atx9yrqdzu+0rag0n4cjx@boards.trello.com
     idBoard: string // ex. 6241fcc7a56cbd7b5fee8b14

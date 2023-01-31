@@ -26,7 +26,7 @@ Website that allow for a display of an specific trello agile kanban, to be displ
 - ✅ Marker Title = Card Title
 - ✅ Marker Description = Card Description 
 - ✅ Card TODO = List with crossed items in Marker description
-- ⬛ Card Last Update Date = Small date ate top of marker
+- ✅ Card Last Update Date = Small date ate top of marker
 - ✅ Navigation Menu Lists = Trello Lists
 - ✅ Card Label give sorting order in the Navigation Menu
 - ✅ Cards label give balls color

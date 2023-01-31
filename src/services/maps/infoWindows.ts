@@ -53,6 +53,10 @@ function renderCardContent(card: TrelloCardCompiled): string {
                     color : ${getTextColorFromBackgroundColor(trelloColorToRGB(label.color))}
                 "></div>`).join(" ")}
             </div>
+            <div class="card-date">
+                <span>${card.dateLastActivity ? `Dernière Activité : ${new Date(card.dateLastActivity).toDateString()}` : ""}</span>
+                <span>${card.due ? `Deadline : ${new Date(card.due).toDateString()}` : ""}</span>
+            </div>
             <a href="${card.url}" target="_blank">🔗 Link to trello</a> 
             <div class="map-description">
                 ${card.desc}

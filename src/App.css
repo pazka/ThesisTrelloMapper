@@ -86,9 +86,16 @@
     width: 1.5em;
     height: 1.5em;
     border-radius: 0.75em;
-    margin-left: 0.5em;
+    margin-right: 0.5em;
 }
 
+.card-date{
+    font-size: 0.9em;
+    margin-bottom: 1em;
+    font-style: italic;
+    display: flex;
+    flex-direction: column;
+}
 
 #list-menu .MuiButtonBase-root {
     min-height: 0.5em !important;
@@ -109,14 +116,14 @@
 #map-legend {
     display: flex;
     flex-wrap: wrap;
-    flex : 0 1 auto;
+    flex: 0 1 auto;
     height: fit-content;
     background-color: black;
     font-size: 0.8em;
 }
 
 #mainMap {
-    flex : 1 1 auto;
+    flex: 1 1 auto;
 }
 
 .legend-item {
