@@ -32,8 +32,9 @@ function renderChecklistText(checklist: TrelloChecklist): string {
 }
 
 function renderCoverImage(card: TrelloCardCompiled): string {
-    if(!card.cover) return ""
+    if(!card.cover.idUploadedBackground) return ""
     
+    console.log("card with cover : ",card)
     return `
         <div class="map-cover-image" style="background-image: url(${card.cover?.idUploadedBackground})"></div>
     `
@@ -48,7 +49,7 @@ function renderCardContent(card: TrelloCardCompiled): string {
                 ${capitalizeFirstLetters(card.name)} 
             </h1>
             <div class="map-badges">
-                ${card.labels.map((label: TrelloLabel) => `<div style="
+                ${card.labels.map((label: TrelloLabel) => `<div title="${label.name}" style="
                     background-color:${trelloColorToRGB(label.color)};
                     color : ${getTextColorFromBackgroundColor(trelloColorToRGB(label.color))}
                 "></div>`).join(" ")}
@@ -57,12 +58,14 @@ function renderCardContent(card: TrelloCardCompiled): string {
                 <span>${card.dateLastActivity ? `Dernière Activité : ${new Date(card.dateLastActivity).toDateString()}` : ""}</span>
                 <span>${card.due ? `Deadline : ${new Date(card.due).toDateString()}` : ""}</span>
             </div>
-            <a href="${card.url}" target="_blank">🔗 Link to trello</a> 
             <div class="map-description">
                 ${card.desc}
+                <div>
+                    ${card._compiled.checklists?.map(renderChecklistText).join("\n")}
+                </div>
             </div>
-            <div>
-                ${card._compiled.checklists?.map(renderChecklistText).join("\n")}
+            <div class="trello-link" >
+                <a href="${card.url}" target="_blank">🔗 Link to trello</a> 
             </div>
         </div>
     `

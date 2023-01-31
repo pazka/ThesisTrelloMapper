@@ -52,7 +52,7 @@ export default function MapDisplay() {
         <div  id={"map-legend"} style={{
         }}>
             {
-                Object.keys(labels).filter(k => labels[k] != "").sort().map(color => <span className="legend-item">
+                Object.keys(labels).filter(k => labels[k] != "").sort().map((color,i) => <span key={i} className="legend-item">
                     <span style={{display:"block",width: "10px", height: "10px",marginRight : "0.5em", backgroundColor: trelloColorToRGB(color)}}></span>
                     <span style={{color: "white"}}> {labels[color]}</span>
                     </span>

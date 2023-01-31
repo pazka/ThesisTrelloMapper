@@ -89,6 +89,14 @@
     margin-right: 0.5em;
 }
 
+.map-description {
+    font-size: 1.2em;
+}
+
+.trello-link{
+    margin-top : 1em;
+}
+
 .card-date{
     font-size: 0.9em;
     margin-bottom: 1em;
