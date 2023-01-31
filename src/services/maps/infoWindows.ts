@@ -83,7 +83,6 @@ export function createNewInfoWindow(marker: google.maps.Marker, card: TrelloCard
 
     marker.addListener("click", () => {
         openAnInfoWindows(card.id);
-        displayConstellation(card._compiled.listName,marker.getMap() as google.maps.Map)
     });
     
     return cardInfos;
@@ -92,12 +91,15 @@ export function createNewInfoWindow(marker: google.maps.Marker, card: TrelloCard
 export function openAnInfoWindows(id: string): void {
     const infoWindow = allInfoWindows.find(infoWindow => infoWindow.card.id === id);
     if (infoWindow) {
+        displayConstellation(infoWindow.card._compiled.listName,infoWindow.marker.getMap() as google.maps.Map)
+        
         infoWindow.elem.open({
             anchor: infoWindow.marker,
             map: infoWindow.marker.getMap(),
         });
         currentOpenedInfoWindow?.close()
         currentOpenedInfoWindow = infoWindow.elem;
+        
         window.history.pushState(infoWindow.card.name, "","#"+id);
     }else{
         console.error("infoWindow not found", id);
