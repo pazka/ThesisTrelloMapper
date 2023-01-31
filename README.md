@@ -14,7 +14,7 @@ Website that allow for a display of an specific trello agile kanban, to be displ
 - ✅ Have a menu that displays those markers
 - ✅ Each list must have a filter that will change the visibility of the markers on the map
 - ✅ Generate a legend for the map from trello labels data (with color)
-- ⬛ Optional : create itinerary from tasks from the same list
+- ✅ Optional : create itinerary from tasks from the same list
 - ✅ Tool to import the latest trello (will use Trello Atlassian API)
 
 ## Rules of mapping from Trello to Maps
@@ -30,4 +30,4 @@ Website that allow for a display of an specific trello agile kanban, to be displ
 - ✅ Navigation Menu Lists = Trello Lists
 - ✅ Card Label give sorting order in the Navigation Menu
 - ✅ Cards label give balls color
-- ⬛ Card Cover = Marker cover
+- ❔ Card Cover = Marker cover

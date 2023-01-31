@@ -1,11 +1,9 @@
 import {useEffect, useRef, useState} from "react"
-import {googleMapObservable$, initMap} from "../services/maps/mapService";
+import {initMap} from "../services/maps/mapService";
 import {useLocation} from "react-router-dom";
 import {openAnInfoWindows} from "../services/maps/infoWindows";
 import {trelloFetchObserver$} from "../services/trello/trelloService";
 import {trelloColorToRGB} from "./TrelloLabelsIcon";
-import {getTextColorFromBackgroundColor} from "../services/myMath";
-import {Chip} from "@mui/material";
 
 export default function MapDisplay() {
     const location = useLocation()

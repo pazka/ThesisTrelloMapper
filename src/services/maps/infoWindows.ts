@@ -2,12 +2,14 @@ import {TrelloCardCompiled} from "../../../types/TrelloCard";
 import {convertLabelsToSvgUrl, trelloColorToRGB} from "../../components/TrelloLabelsIcon";
 import {getTextColorFromBackgroundColor} from "../myMath";
 import {TrelloChecklist} from "../../../types/TrelloChecklist";
+import {displayConstellation} from "./constellation";
 
-const allInfoWindows: {
+export interface InfoWindowData {
     card:TrelloCardCompiled,
     marker : google.maps.Marker,
-    elem: google.maps.InfoWindow 
-}[] = [];
+    elem: google.maps.InfoWindow
+}
+export const allInfoWindows: InfoWindowData[] = [];
 
 let currentOpenedInfoWindow: google.maps.InfoWindow;
 
@@ -81,6 +83,7 @@ export function createNewInfoWindow(marker: google.maps.Marker, card: TrelloCard
 
     marker.addListener("click", () => {
         openAnInfoWindows(card.id);
+        displayConstellation(card._compiled.listName,marker.getMap() as google.maps.Map)
     });
     
     return cardInfos;

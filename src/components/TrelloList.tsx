@@ -1,11 +1,9 @@
 import React from "react";
-import {Accordion, AccordionDetails, AccordionSummary, Button, IconButton, Link} from "@mui/material";
-import {ExpandMore, Visibility, VisibilityOff} from "@mui/icons-material";
+import {Accordion, AccordionDetails, AccordionSummary, Link} from "@mui/material";
+import {ExpandMore, Visibility} from "@mui/icons-material";
 import {TrelloLabelsIcon} from "./TrelloLabelsIcon";
 import {TrelloCardCompiled} from "../../types/TrelloCard";
-import {
-    setVisibilityForOneList
-} from "../services/maps/infoWindows";
+import {setVisibilityForOneList} from "../services/maps/infoWindows";
 
 export default function TrelloListMenu(
     {
