@@ -1,8 +1,11 @@
 import React from "react";
-import {Accordion, AccordionDetails, AccordionSummary, Link} from "@mui/material";
-import {ExpandMore} from "@mui/icons-material";
+import {Accordion, AccordionDetails, AccordionSummary, Button, IconButton, Link} from "@mui/material";
+import {ExpandMore, Visibility, VisibilityOff} from "@mui/icons-material";
 import {TrelloLabelsIcon} from "./TrelloLabelsIcon";
 import {TrelloCardCompiled} from "../../types/TrelloCard";
+import {
+    setVisibilityForOneList
+} from "../services/maps/infoWindows";
 
 export default function TrelloListMenu(
     {
@@ -10,6 +13,8 @@ export default function TrelloListMenu(
     }: {
         cards: TrelloCardCompiled[]
     }) {
+    const [isListVisible, setIsListVisible] = React.useState(false);
+    
     if (cards.length === 0) return null;
 
     //@ts-ignore
@@ -23,10 +28,14 @@ export default function TrelloListMenu(
 
     return <Accordion id={"list-menu"}>
         <AccordionSummary
-            expandIcon={<ExpandMore/>}
+            expandIcon={isListVisible ? <Visibility/> : <ExpandMore/>}
             aria-controls={"trello-list" + listData.id}
             id={"trello-list" + listData.id}
             className={"list-menu-name"}
+            onClick={()=>{
+                setIsListVisible(!isListVisible);
+                setVisibilityForOneList(listData.id, !isListVisible);
+            }}
         >
             {listData.name}
         </AccordionSummary>

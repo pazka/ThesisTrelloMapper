@@ -12,7 +12,7 @@ Website that allow for a display of an specific trello agile kanban, to be displ
   - ✅ Redact rules of conversion with the artist 
   - ✅ map rules to google Map
 - ✅ Have a menu that displays those markers
-- ⬛ Each list must have a filter that will change the visibility of the markers on the map
+- ✅ Each list must have a filter that will change the visibility of the markers on the map
 - ✅ Generate a legend for the map from trello labels data (with color)
 - ⬛ Optional : create itinerary from tasks from the same list
 - ✅ Tool to import the latest trello (will use Trello Atlassian API)
@@ -28,6 +28,6 @@ Website that allow for a display of an specific trello agile kanban, to be displ
 - ✅ Card TODO = List with crossed items in Marker description
 - ⬛ Card Last Update Date = Small date ate top of marker
 - ✅ Navigation Menu Lists = Trello Lists
-- ⬛ Card Label give sorting order in the Navigation Menu
+- ✅ Card Label give sorting order in the Navigation Menu
 - ✅ Cards label give balls color
 - ⬛ Card Cover = Marker cover

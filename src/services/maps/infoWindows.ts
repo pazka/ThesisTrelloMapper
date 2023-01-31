@@ -3,7 +3,11 @@ import {convertLabelsToSvgUrl, trelloColorToRGB} from "../../components/TrelloLa
 import {getTextColorFromBackgroundColor} from "../myMath";
 import {TrelloChecklist} from "../../../types/TrelloChecklist";
 
-const allInfoWindows: {card:TrelloCardCompiled,marker : google.maps.Marker,elem: google.maps.InfoWindow }[] = [];
+const allInfoWindows: {
+    card:TrelloCardCompiled,
+    marker : google.maps.Marker,
+    elem: google.maps.InfoWindow 
+}[] = [];
 
 let currentOpenedInfoWindow: google.maps.InfoWindow;
 
@@ -89,3 +93,38 @@ export function openAnInfoWindows(id: string): void {
         console.error("infoWindow not found", id);
     }
 }
+
+export function setCardsVisibilityByListId(idList: string,visibility:boolean): void {
+    allInfoWindows.forEach(infoWindow => {
+        if(infoWindow.card.idList === idList){
+            infoWindow.marker.setVisible(visibility);
+        }
+    })
+}
+
+export function setVisibilityForAllList(visibility : boolean): void {
+    allInfoWindows.forEach(infoWindow => {
+        infoWindow.marker.setVisible(visibility);
+    })
+}
+
+export function setVisibilityForOneList(idList: string,visibility : boolean): void {
+
+    if(visibility && idOfSeenLists.length === 0) setVisibilityForAllList(false)
+    
+    if(!visibility && idOfSeenLists.includes(idList)){
+        // remove id from list
+        idOfSeenLists.splice(idOfSeenLists.indexOf(idList),1)
+        setCardsVisibilityByListId(idList,false)
+    }
+    
+    if(visibility && !idOfSeenLists.includes(idList)){
+        // add id to list
+        idOfSeenLists.push(idList)
+        setCardsVisibilityByListId(idList,true)
+    }
+    
+    if(idOfSeenLists.length === 0) return setVisibilityForAllList(true)
+}
+
+const idOfSeenLists : string[] = []

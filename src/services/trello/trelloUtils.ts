@@ -30,7 +30,6 @@ export function getDateOfCardFromListTitle(listName?: string): Date {
 
     //Date format is : DD/MM/YY
     const date = listName.match(/.*(\d{2})\/(\d{2})\/(\d{2}).*/)
-    console.debug(listName,date)
     
     if (!date) {
         return new Date()
