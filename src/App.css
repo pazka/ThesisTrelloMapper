@@ -18,8 +18,8 @@
     background: #555;
 }
 
-.nav-controls{
-    width : 15%;
+.nav-controls {
+    width: 15%;
     overflow-y: auto;
 }
 
@@ -39,8 +39,8 @@
     font-size: 0.8rem;
 }
 
-.list-menu-name{
-    font-size:small;
+.list-menu-name {
+    font-size: small;
     flex-shrink: 0;
     font-weight: 800;
 }
@@ -53,46 +53,75 @@
 }
 
 #list-menu li {
-    transition : all 0.2s ease;
+    transition: all 0.2s ease;
     border-width: 1px;
-    border-bottom-color: rgba(0,0,0,0);
-    border-left-color: rgba(0,0,0,0);
-    border-top-color: rgba(0,0,0,0);
-    border-right-color: rgba(0,0,0,0);
+    border-bottom-color: rgba(0, 0, 0, 0);
+    border-left-color: rgba(0, 0, 0, 0);
+    border-top-color: rgba(0, 0, 0, 0);
+    border-right-color: rgba(0, 0, 0, 0);
     border-style: solid;
 }
 
 #list-menu li:hover {
-    transition : all 0s ease;
+    transition: all 0s ease;
     border-bottom-color: black;
     border-left-color: black;
 }
 
-.map-card{
-    
+.map-card {
+
 }
 
-.map-card h1{
+.map-card h1 {
     margin: 0;
 }
 
-.map-badges{
+.map-badges {
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 1em;
 }
 
 .map-badges > * {
-    width:1.5em;
-    height:1.5em;
+    width: 1.5em;
+    height: 1.5em;
     border-radius: 0.75em;
     margin-left: 0.5em;
 }
 
 
-#list-menu .MuiButtonBase-root{
-    min-height: 0.5em!important;
+#list-menu .MuiButtonBase-root {
+    min-height: 0.5em !important;
 }
+
 #list-menu .MuiAccordionSummary-content {
     margin: 0.5em !important;
+}
+
+#map-container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#map-legend {
+    display: flex;
+    flex-wrap: wrap;
+    flex : 0 1 auto;
+    height: fit-content;
+    background-color: black;
+    font-size: 0.8em;
+}
+
+#mainMap {
+    flex : 1 1 auto;
+}
+
+.legend-item {
+    height: 1em;
+    display: flex;
+    margin-right: 2em;
+    align-items: center
 }

@@ -45,26 +45,14 @@ export default function MapDisplay() {
         })
     }, [])
 
-    return <div style={{
-        display: "flex",
-        flexDirection: "column",
-        width: "100%",
-        height: "100%",
-        overflow: "hidden"
+    return <div id={"map-container"} style={{
     }}>
         <div ref={ref} id={"mainMap"} style={{
-            width: "100%",
-            height: "98%"
         }}/>
-        <div style={{
-            display : "flex",
-            "flexWrap": "wrap",
-            height: "4%",
-            backgroundColor: "black",
-            fontSize: "0.8em",
+        <div  id={"map-legend"} style={{
         }}>
             {
-                Object.keys(labels).filter(k => labels[k] != "").sort().map(color => <span style={{display : "flex",marginRight:"2em",alignItems:"center"}}>
+                Object.keys(labels).filter(k => labels[k] != "").sort().map(color => <span className="legend-item">
                     <span style={{display:"block",width: "10px", height: "10px",marginRight : "0.5em", backgroundColor: trelloColorToRGB(color)}}></span>
                     <span style={{color: "white"}}> {labels[color]}</span>
                     </span>
