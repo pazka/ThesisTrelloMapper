@@ -24,8 +24,8 @@ export function initMap(mapRef: HTMLElement | null,callback : Function): google.
             streetViewControl: false,
             mapTypeControl: false,
             zoom: 5,
-            minZoom: 5, 
-            maxZoom: 15,
+            minZoom: 3, 
+            maxZoom: 9,
             styles: mapStyle as google.maps.MapTypeStyle[],
             center: {lat: -25.363, lng: 131.044},
             mapTypeId: google.maps.MapTypeId.ROADMAP
